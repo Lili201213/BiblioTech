@@ -1,0 +1,762 @@
+/* ============================================================
+   BiblioTech - Hoja de estilos principal (sin Bootstrap ni Vite)
+   Paleta en variables :root. Títulos en serif, cuerpo en system-ui.
+   ============================================================ */
+
+:root {
+    --morado-050: #F8F4FB;   /* fondo de página */
+    --morado-100: #EFE6F7;   /* cabeceras de tabla, chips */
+    --morado-200: #DCC9EE;   /* bordes suaves */
+    --morado-400: #A57BCB;   /* íconos, hover suave */
+    --morado-600: #7A4BA8;   /* barra superior, botones secundarios */
+    --morado-800: #4F2D73;   /* títulos, hover */
+    --dorado: #E3AE48;       /* botón principal, canto de estante */
+    --dorado-oscuro: #C98F26;
+    --crema: #FFFDF7;
+    --texto: #2E2240;
+    --texto-suave: #6B5F7A;
+    --ok: #2E7D5B;
+    --error: #B3261E;
+    --aviso: #B7791F;
+
+    --fuente-serif: Georgia, "Times New Roman", serif;
+    --fuente-cuerpo: system-ui, "Segoe UI", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: var(--fuente-cuerpo);
+    margin: 0;
+    background: var(--morado-050);
+    color: var(--texto);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Títulos en serif con una línea dorada corta debajo */
+h1, h2, h3, .marca, .contador .numero, .menu-titulo, .relleno-titulo {
+    font-family: var(--fuente-serif);
+}
+
+h1 {
+    color: var(--morado-800);
+    margin: 0 0 8px;
+    font-size: 1.7rem;
+}
+
+h1::after {
+    content: "";
+    display: block;
+    width: 72px;
+    height: 3px;
+    background: var(--dorado);
+    margin-top: 10px;
+}
+
+h2 { color: var(--morado-800); margin-top: 26px; }
+
+.texto-suave { color: var(--texto-suave); }
+
+a { color: var(--morado-600); }
+
+/* ===== Barra superior morada con canto dorado ===== */
+.nav {
+    background: var(--morado-600);
+    color: #fff;
+    padding: 12px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    border-bottom: 4px solid var(--dorado); /* el "canto del estante" */
+
+    /* Se queda visible al hacer scroll (para el menú lateral pegajoso) */
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav > div { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.nav form { margin: 0; }
+
+.nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: .95rem;
+}
+
+.nav a:hover { background: var(--morado-800); }
+
+.nav .marca {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.nav .nombre-usuario { font-size: .95rem; padding: 0 4px; }
+
+/* Salir discreto, como una píldora (no un botón rojo) */
+.nav .salir {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, .65);
+    border-radius: 999px;
+    padding: 5px 14px;
+    cursor: pointer;
+    font-size: .85rem;
+    font-family: inherit;
+}
+
+.nav .salir:hover { background: var(--morado-800); border-color: #fff; }
+.nav .salir:focus-visible { outline: 3px solid var(--dorado); outline-offset: 2px; }
+
+/* Insignia del rol dentro de la barra */
+.insignia-rol { background: var(--morado-100); color: var(--morado-800); }
+
+/* ===== Contenedores (pantalla completa, sin ancho máximo pequeño) ===== */
+.contenedor {
+    max-width: 1800px;   /* tope máximo; ocupa casi todo el ancho */
+    margin: 0 auto;
+    padding: 30px 32px;
+    width: 100%;
+    flex: 1;             /* empuja el pie hacia abajo cuando hay poco contenido */
+}
+
+/* Cuando hay menú lateral: rejilla de 240px + contenido */
+.marco {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 24px;
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 30px 32px;
+    width: 100%;
+    align-items: start;
+    flex: 1;             /* el pie siempre queda abajo */
+}
+
+/* min-width: 0 evita que las tablas anchas desborden la columna */
+.marco .contenedor { margin: 0; max-width: none; padding: 0; min-width: 0; }
+
+/* ===== Menú lateral de administración ===== */
+.menu-lateral {
+    background: #fff;
+    border: 1px solid var(--morado-200);
+    border-radius: 12px;
+    padding: 16px 12px;
+    box-shadow: 0 2px 8px rgba(79, 45, 115, .08);
+
+    /* Se queda fijo al hacer scroll, justo debajo de la barra superior */
+    position: sticky;
+    top: 76px; /* altura aproximada de la barra + un pequeño margen */
+}
+
+.menu-titulo {
+    font-size: .78rem;
+    letter-spacing: .08em;
+    color: var(--texto-suave);
+    margin: 0 8px 10px;
+}
+
+.menu-enlace {
+    display: block;
+    padding: 9px 12px;
+    border-radius: 8px;
+    color: var(--texto);
+    text-decoration: none;
+    font-size: .95rem;
+    margin-bottom: 4px;
+}
+
+.menu-enlace:hover { background: var(--morado-050); color: var(--morado-800); }
+.menu-enlace:focus-visible { outline: 3px solid var(--morado-400); outline-offset: 1px; }
+
+.menu-enlace.activo {
+    background: var(--morado-600);
+    color: #fff;
+    font-weight: bold;
+}
+
+/* ===== Tarjetas blancas ===== */
+.tarjeta {
+    background: #fff;
+    border: 1px solid var(--morado-200);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(79, 45, 115, .07);
+    margin-bottom: 20px;
+}
+
+/* ===== Formularios ===== */
+label {
+    display: block;
+    margin: 12px 0 4px;
+    font-weight: bold;
+    color: var(--morado-800);
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--morado-200);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    background: #fff;
+    color: var(--texto);
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--morado-600);
+    box-shadow: 0 0 0 3px rgba(122, 75, 168, .15);
+}
+
+input[type="checkbox"] {
+    width: auto;
+    accent-color: var(--morado-600);
+}
+
+.fila { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+.ayuda {
+    font-size: .82rem;
+    color: var(--texto-suave);
+    margin: 5px 0 0;
+}
+
+.casilla { display: flex; align-items: center; gap: 8px; margin-top: 16px; }
+.casilla label { margin: 0; }
+/* ===== Botones ===== */
+.btn {
+    display: inline-block;
+    padding: 9px 16px;
+    background: var(--dorado);
+    color: var(--morado-800);
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: .95rem;
+    font-weight: bold;
+    font-family: inherit;
+}
+
+.btn:hover { background: var(--dorado-oscuro); }
+.btn:focus-visible { outline: 3px solid var(--morado-400); outline-offset: 2px; }
+
+.btn-morado { background: var(--morado-600); color: #fff; }
+.btn-morado:hover { background: var(--morado-800); }
+
+.btn-gris { background: var(--texto-suave); color: #fff; }
+.btn-gris:hover { background: var(--texto); }
+
+.btn-rojo { background: var(--error); color: #fff; }
+.btn-rojo:hover { background: #8f1e18; }
+
+.btn-chico { padding: 5px 10px; font-size: .85rem; }
+
+/* ===== Mensajes flash ===== */
+.ok {
+    background: #E7F3EC;
+    color: #1E5E42;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border-left: 4px solid var(--ok);
+    margin-bottom: 14px;
+}
+
+.error {
+    background: #FBE9E7;
+    color: var(--error);
+    padding: 12px 14px;
+    border-radius: 8px;
+    border-left: 4px solid var(--error);
+    margin-bottom: 14px;
+}
+
+/* ===== Insignias de estado ===== */
+.insignia {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: .8rem;
+    font-weight: bold;
+}
+
+.insignia-amarilla { background: #FBF0D8; color: var(--aviso); }    /* pendiente */
+.insignia-verde { background: #E1F0E8; color: var(--ok); }         /* confirmada, activo, pagada */
+.insignia-roja { background: #FBE7E5; color: var(--error); }       /* expirada, vencido */
+.insignia-gris { background: #ECEAEF; color: var(--texto-suave); } /* cancelada, condonada */
+.insignia-morado { background: var(--morado-100); color: var(--morado-800); } /* devuelto */
+.insignia-azul { background: #E7F0FB; color: #1f3a5f; }            /* legacy */
+
+/* ===== Chip de categoría (catálogo) ===== */
+.chip {
+    display: inline-block;
+    background: var(--morado-100);
+    color: var(--morado-800);
+    border-radius: 999px;
+    padding: 3px 10px;
+    font-size: .78rem;
+    align-self: flex-start;
+}
+/* ===== Tablas ===== */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid var(--morado-200);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--morado-200);
+}
+
+th {
+    background: var(--morado-100);
+    color: var(--morado-800);
+    font-family: var(--fuente-serif);
+    font-size: .92rem;
+}
+
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover { background: var(--morado-050); }
+
+.acciones { white-space: nowrap; }
+.acciones form { display: inline; margin-right: 6px; }
+
+.barra {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.buscador { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.buscador input { width: 260px; }
+
+/* ===== Tarjetas de estadísticas (ficha de biblioteca) ===== */
+.contadores {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); /* llenan todo el ancho */
+    gap: 14px;
+    margin: 18px 0 8px;
+}
+
+.contador {
+    display: block;
+    background: var(--crema);
+    border: 1px solid var(--morado-200);
+    border-left: 6px solid var(--morado-600);
+    border-radius: 12px;
+    padding: 16px;
+    text-decoration: none;
+    color: var(--texto);
+    box-shadow: 0 2px 6px rgba(79, 45, 115, .06);
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.contador:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 14px rgba(79, 45, 115, .15);
+    border-left-color: var(--morado-800);
+    color: var(--texto);
+}
+
+.contador:focus-visible { outline: 3px solid var(--morado-400); outline-offset: 2px; }
+
+.contador .numero {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--morado-800);
+    line-height: 1.1;
+    margin-bottom: 4px;
+}
+
+/* ===== Catálogo: rejilla de tarjetas ===== */
+.rejilla {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 18px;
+}
+
+.tarjeta-libro {
+    background: #fff;
+    border: 1px solid var(--morado-200);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(79, 45, 115, .07);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.tarjeta-libro:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(79, 45, 115, .16);
+}
+
+.tarjeta-libro img.portada {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    display: block;
+    background: var(--morado-100);
+}
+/* Portada de relleno: proporción 2:3 con lomo oscuro a la izquierda */
+.sin-portada {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 14px;
+    border-left: 6px solid rgba(0, 0, 0, .35);
+}
+
+.sin-portada .relleno-titulo {
+    color: var(--crema);
+    font-size: 1.05rem;
+    line-height: 1.3;
+    overflow-wrap: break-word;
+}
+
+/* Colores de portada de relleno según id del libro (id % 5) */
+.portada-1 { background: #7A4BA8; }
+.portada-2 { background: #8C3B5E; }
+.portada-3 { background: #2F6F73; }
+.portada-4 { background: #5B7A3A; }
+.portada-5 { background: #3F3A7A; }
+
+/* Portada de relleno en la página de detalle */
+.portada-detalle-sin {
+    width: 100%;
+    height: 320px;
+    border-radius: 12px;
+    border-left: 6px solid rgba(0, 0, 0, .35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 18px;
+}
+
+.portada-detalle-sin .relleno-titulo { color: var(--crema); font-size: 1.4rem; }
+
+.tarjeta-libro .contenido {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.tarjeta-libro .contenido h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--morado-800);
+}
+
+.tarjeta-libro .contenido p { margin: 0; }
+.tarjeta-libro .contenido .btn { align-self: flex-start; margin-top: auto; }
+
+.portada-detalle {
+    width: 100%;
+    height: auto;
+    max-height: 480px;
+    object-fit: contain;
+    background: var(--morado-100);
+    padding: 8px;
+    border-radius: 12px;
+}
+
+/* ===== Banner (componente <x-banner>) ===== */
+.banner {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    min-height: 220px;
+    padding: 28px 32px;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 22px;
+
+    /* Degradado diagonal morado + líneas finas que imitan lomos de libros */
+    background:
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, .05) 0 2px, transparent 2px 14px),
+        linear-gradient(135deg, var(--morado-800) 0%, var(--morado-600) 100%);
+
+    /* Franja dorada inferior (canto de estante) */
+    border-bottom: 4px solid var(--dorado);
+
+    color: var(--crema);
+
+    /* Entrada suave */
+    animation: banner-entra .5s ease;
+}
+
+@keyframes banner-entra {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Respeta a quien no quiere animaciones */
+@media (prefers-reduced-motion: reduce) {
+    .banner { animation: none; }
+}
+
+.banner-texto { flex: 1; min-width: 0; }
+
+.banner-fecha {
+    margin: 0 0 10px;
+    font-size: .78rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: rgba(255, 253, 247, .75);
+}
+
+.banner-titulo {
+    font-family: var(--fuente-serif);
+    color: var(--crema);
+    font-size: 2rem;
+    margin: 0 0 8px;
+}
+
+/* La línea dorada de los títulos también se ve dentro del banner */
+.banner-titulo::after { background: var(--dorado); }
+
+.banner-subtitulo {
+    margin: 0 0 16px;
+    color: rgba(255, 253, 247, .78);
+    font-size: 1rem;
+    max-width: 640px;
+}
+
+.banner-acciones {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Banner compacto (listados): sin estante y más bajo */
+.banner-compacto { min-height: 130px; padding: 22px 28px; }
+.banner-compacto .banner-titulo { font-size: 1.5rem; }
+.banner-compacto .banner-subtitulo { margin-bottom: 0; }
+
+/* Buscador dentro del banner: textos claros sobre el morado */
+.banner .buscador { margin-bottom: 0; flex-wrap: wrap; }
+.banner .buscador input,
+.banner .buscador select {
+    background: rgba(255, 255, 255, .14);
+    border: 1px solid rgba(255, 255, 255, .35);
+    color: var(--crema);
+    width: auto;
+    min-width: 200px;
+}
+
+.banner .buscador input::placeholder { color: rgba(255, 253, 247, .65); }
+.banner .buscador input:focus,
+.banner .buscador select:focus { border-color: var(--dorado); box-shadow: 0 0 0 3px rgba(227, 174, 72, .25); }
+.banner .buscador option { color: var(--texto); background: #fff; }
+
+/* ===== Estante decorativo del banner (solo CSS) ===== */
+.banner-estante {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    flex-shrink: 0;
+}
+
+.banner-libros {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+}
+
+.banner-libro {
+    display: block;
+    border-radius: 3px 3px 0 0;   /* esquinas superiores redondeadas */
+    border-left: 3px solid rgba(0, 0, 0, .25); /* el lomo */
+}
+
+/* Alturas, anchos y colores de cada libro del estante */
+.banner-libro-1  { width: 22px; height: 120px; background: #7A4BA8; }
+.banner-libro-2  { width: 28px; height: 145px; background: #E3AE48; }
+.banner-libro-3  { width: 20px; height: 100px; background: #8C3B5E; }
+.banner-libro-4  { width: 34px; height: 160px; background: #3F3A7A; }
+.banner-libro-5  { width: 18px; height: 90px;  background: #2F6F73; }
+.banner-libro-6  { width: 24px; height: 130px; background: #5B7A3A; }
+.banner-libro-7  { width: 30px; height: 150px; background: #A57BCB; }
+.banner-libro-8  { width: 20px; height: 105px; background: #C98F26; }
+.banner-libro-9  { width: 26px; height: 135px; background: #4F2D73; }
+.banner-libro-10 { width: 22px; height: 95px;  background: #E3AE48; }
+.banner-libro-11 { width: 30px; height: 155px; background: #7A4BA8; }
+
+/* Tres libros ligeramente inclinados */
+.inclinado-a { transform: rotate(-8deg); transform-origin: bottom right; }
+.inclinado-b { transform: rotate(7deg);  transform-origin: bottom left; }
+.inclinado-c { transform: rotate(-6deg); transform-origin: bottom right; }
+
+/* Repisa de madera */
+.banner-repisa {
+    width: 100%;
+    height: 10px;
+    background: #8B5E3C;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, .35);
+    margin-top: 2px;
+}
+
+/* ===== Paneles del dashboard (2 columnas) ===== */
+.paneles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.panel-dash {
+    background: #fff;
+    border: 1px solid var(--morado-200);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(79, 45, 115, .07);
+    min-width: 0;
+}
+
+.panel-cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.panel-cabecera h2 { margin: 0; font-size: 1.15rem; }
+
+.panel-cabecera a { font-size: .88rem; white-space: nowrap; }
+
+/* Filas de listas cortas dentro de los paneles */
+.panel-dash table { font-size: .92rem; }
+.panel-dash th, .panel-dash td { padding: 8px 10px; }
+
+/* Mensaje cuando el panel no tiene registros */
+.panel-vacio {
+    color: var(--texto-suave);
+    font-style: italic;
+    margin: 6px 0;
+}
+
+/* Panel ancho de novedades del catálogo */
+.panel-ancho { margin-bottom: 20px; }
+
+/* ===== Login ===== */
+.caja { max-width: 380px; margin: 60px auto; }
+.caja h1 { text-align: center; font-size: 1.5rem; }
+.caja h1::after { margin-left: auto; margin-right: auto; }
+.caja button { width: 100%; margin-top: 18px; }
+
+.login-emoji {
+    font-size: 3.2rem;
+    text-align: center;
+    margin: 0 0 6px;
+}
+
+/* ===== Paginación ===== */
+.paginacion {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.paginacion a, .paginacion span {
+    padding: 6px 12px;
+    border: 1px solid var(--morado-200);
+    border-radius: 6px;
+    background: #fff;
+    color: var(--morado-600);
+    text-decoration: none;
+}
+
+.paginacion a:hover { background: var(--morado-100); }
+.paginacion .actual { background: var(--morado-600); color: #fff; border-color: var(--morado-600); }
+
+/* ===== Pie de página ===== */
+.pie {
+    margin-top: auto;
+    text-align: center;
+    padding: 16px;
+    color: var(--texto-suave);
+    font-size: .9rem;
+    border-top: 4px solid var(--dorado); /* la misma franja dorada */
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1000px) {
+    /* Los paneles del dashboard pasan a una sola columna */
+    .paneles { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 900px) {
+    /* El estante decorativo se oculta */
+    .banner-estante { display: none; }
+}
+
+@media (max-width: 800px) {
+    /* Relleno horizontal más pequeño en móvil */
+    .contenedor, .marco { padding-left: 16px; padding-right: 16px; }
+    .nav { padding-left: 16px; padding-right: 16px; }
+    .banner { padding: 20px; min-height: 150px; }
+    .banner-titulo { font-size: 1.5rem; }
+
+    /* El menú lateral pasa arriba, como lista horizontal con scroll */
+    .marco { grid-template-columns: 1fr; gap: 16px; }
+
+    .menu-lateral {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 6px;
+        overflow-x: auto;
+        padding: 10px;
+        position: static; /* en móvil no hace falta pegarlo */
+    }
+
+    .menu-titulo { display: none; }
+    .menu-enlace { margin-bottom: 0; white-space: nowrap; }
+
+    /* Catálogo: 2 columnas */
+    .rejilla { grid-template-columns: repeat(2, 1fr); }
+
+    .fila { grid-template-columns: 1fr; }
+    .buscador input { width: 100%; }
+}
+
+@media (max-width: 500px) {
+    /* Luego 1 sola columna */
+    .rejilla { grid-template-columns: 1fr; }
+    .contadores { grid-template-columns: 1fr; }
+}
+
+
+
